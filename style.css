@@ -58,7 +58,7 @@ a {
 	image-rendering: pixelated;
 }
 @media screen and (min-width: 320px) and (min-height: 192px) {
-	.main { transform: scale(2) }
+	.main { transform: scale(2); }
 }
 @media screen and (min-width: 480px) and (min-height: 288px) {
 	.main { transform: scale(3); }
