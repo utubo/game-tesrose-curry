@@ -192,9 +192,9 @@ audio.se = async (mp3, opt = { pan: 0 }) => {
 	src.start();
 };
 
+// -----------------------
 // Frame control
-let mainTimer = null;
-let tick = new Date().getTime();
+let tick = 0;
 let fase = null;
 let lastFase = null;
 const MSPF = 15;
@@ -209,7 +209,7 @@ const mainLoop = () => {
 	drawCommons();
 	fase.draw();
 	const w = Math.max(5, MSPF - (new Date().getTime() - tick));
-	mainTimer = setTimeout(mainLoop, w);
+	setTimeout(mainLoop, w);
 };
 const onTouch = e => {
 	if (e.key === 'F5') return;
@@ -221,12 +221,12 @@ const onTouchEnd = e => {
 	fase.onTouchEnd();
 	e.preventDefault();
 };
-
 document.addEventListener('ontouchstart' in window ? 'touchstart' : 'mousedown', onTouch);
 document.addEventListener('keydown', onTouch);
 document.addEventListener('ontouchend' in window ? 'touchend' : 'mouseup', onTouchEnd);
 document.addEventListener('keyup', onTouchEnd);
 
+// -----------------------
 // Animation
 let animeIndex = 0;
 let fCount = 0;
@@ -276,6 +276,9 @@ let notesIndex = 0;
 let notes = [];
 let hotGage = 0;
 let hotLevel = 0;
+let curryCount = 0;
+let timeTick = 0;
+let coolTime = 0;
 
 // -----------------------
 // Common logics
@@ -340,7 +343,6 @@ const newFase = id => {
 	const NOP = () => {};
 	return { id: id, init: NOP, main: NOP, draw: NOP, onTouch: NOP, onTouchEnd: NOP };
 };
-
 const Fase = {
 	TITLE: newFase(0),
 	START: newFase(1),
@@ -365,11 +367,15 @@ Fase.TITLE.YODARE_DELAY = 20;
 Fase.TITLE.init = () => {
 	resetNotes();
 	hotLevel = 0;
+	coolTime = 0;
 	Fase.TITLE.fastestTime = loadData().timeTick;
 	fCount = Fase.TITLE.YODARE_DELAY;
 };
 Fase.TITLE.main = () => {
 	roleNotes();
+};
+Fase.TITLE.onTouchEnd = () => {
+	fase = Fase.START;
 };
 Fase.TITLE.draw = () => {
 	// Record
@@ -385,9 +391,6 @@ Fase.TITLE.draw = () => {
 	if (!fCount) {
 		fCount = Fase.TITLE.YODARE_DELAY;
 	}
-};
-Fase.TITLE.onTouchEnd = () => {
-	fase = Fase.START;
 };
 
 // -----------------------
@@ -415,8 +418,6 @@ Fase.START.draw = () => {
 
 // -----------------------
 // fase PLAY
-let curryCount = 0;
-let timeTick = 0;
 Fase.PLAY.init = () => {
 	audio.se('se_start.wav');
 };
@@ -427,7 +428,6 @@ Fase.PLAY.main = () => {
 	roleNotes();
 };
 
-let coolTime = 0;
 Fase.PLAY.onTouch = () => {
 	let note = null;
 	for (const n of notes) {
@@ -476,7 +476,6 @@ Fase.PLAY.onTouch = () => {
 		}
 	}
 };
-
 Fase.PLAY.draw = hideTime => {
 	// Curry x 100
 	ctx.drawImage(sprite, 0, 4 * CHR_SIZE, CHR_SIZE, CHR_SIZE, 7 * HALF_SIZE, COUNT_Y, CHR_SIZE, CHR_SIZE);
