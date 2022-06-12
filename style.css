@@ -1,0 +1,74 @@
+/* Common */
+body {
+	background: #222;
+	color:#fcf0e0;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	position: relative;
+}
+a {
+	color:#47a7a7;
+}
+.hidden {
+	display: none !important;
+}
+/* Volume contoller */
+#volumeBtn {
+	background: url(./img.png) no-repeat;
+	background-position: 0 0;
+	display: inline-block;
+	height: 16px;
+	image-rendering: pixelated;
+	position: absolute;
+	right: 1px;
+	text-align: right;
+	top: 0;
+	width: 16px;
+	z-index: 2;
+}
+#volumeValueImg {
+	background: url(./img.png) no-repeat;
+	background-position: -16px 0;
+	display: inline-block;
+	height: 16px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 8px;
+}
+/* Main */
+.main_container {
+	margin: 0 auto;
+	max-height: 100vh;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+.main {
+	position: relative;
+	width: 160px;
+	height: 96px;
+	image-rendering: pixelated;
+}
+#canvas {
+	display: block;
+	image-rendering: pixelated;
+}
+@media screen and (min-width: 320px) and (min-height: 192px) {
+	.main { transform: scale(2) }
+}
+@media screen and (min-width: 480px) and (min-height: 288px) {
+	.main { transform: scale(3); }
+}
+@media screen and (min-width: 640px) and (min-height: 384px) {
+	.main { transform: scale(4); }
+}
+@media screen and (min-width: 800px) and (min-height: 480px) {
+	.main { transform: scale(5); }
+}
+@media screen and (min-width: 960px) and (min-height: 576px) {
+	.main { transform: scale(6); }
+}
