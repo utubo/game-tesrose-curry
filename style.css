@@ -3,8 +3,8 @@ body {
 	background: #222;
 	color:#fcf0e0;
 	margin: 0;
-	padding: 0;
 	overflow: hidden;
+	padding: 0;
 	position: relative;
 }
 a {
@@ -39,13 +39,12 @@ a {
 }
 /* Main */
 .main_container {
-	margin: 0 auto;
-	max-height: 100vh;
-	position: relative;
-	display: flex;
-	justify-content: center;
 	align-items: center;
-	min-height: 100vh;
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+	margin: 0 auto;
+	position: relative;
 }
 .main {
 	position: relative;
