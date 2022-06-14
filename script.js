@@ -206,7 +206,7 @@ const mainLoop = () => {
 	tick = new Date().getTime();
 	if (lastFase !== fase) {
 		lastFase = fase;
-		fase.startTick = new Date().getTime();
+		fase.startTick = tick;
 		fase.init();
 	}
 	fase.main();
@@ -404,7 +404,7 @@ Fase.START.init = () => {
 	Fase.START.lastCount = 0;
 };
 Fase.START.main = () => {
-	Fase.START.count = Math.max(0, 3 - Math.floor((new Date().getTime() - Fase.START.startTick) / 1000));
+	Fase.START.count = Math.max(0, 3 - Math.floor((tick - Fase.START.startTick) / 1000));
 	if (Fase.START.count <= 0) {
 		fase = Fase.PLAY;
 		audio.se('se_start.wav');
@@ -422,9 +422,8 @@ Fase.START.draw = () => {
 // -----------------------
 // fase PLAY
 Fase.PLAY.main = () => {
-	const t = new Date().getTime();
-	timeTick = Math.min(t - Fase.PLAY.startTick, MAX_TICK);
-	if (coolTime < t) coolTime = 0;
+	timeTick = Math.min(tick - Fase.PLAY.startTick, MAX_TICK);
+	if (coolTime < tick) coolTime = 0;
 	roleNotes();
 };
 Fase.PLAY.onTouch = () => {
@@ -449,13 +448,13 @@ Fase.PLAY.onTouch = () => {
 	rosetAnime.nowDrinking = false;
 	rosetAnime.start();
 	if (!note || note.type === Type.AIR) {
-		coolTime = new Date().getTime() + 1000;
+		coolTime = tick + 1000;
 		audio.se('se_miss.wav');
 		return;
 	}
 	switch (note.type) {
 	case Type.TESRO:
-		coolTime = new Date().getTime() + 2000;
+		coolTime = tick + 2000;
 		audio.se('se_tesro.wav');
 		return;
 	case Type.CURRY:
