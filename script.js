@@ -339,8 +339,8 @@ const drawCommons = () => {
 
 // -----------------------
 // Fase
+const NOP = () => {};
 const newFase = id => {
-	const NOP = () => {};
 	return { id: id, init: NOP, main: NOP, draw: NOP, onTouch: NOP, onTouchEnd: NOP };
 };
 const Fase = {
@@ -357,7 +357,6 @@ const Fase = {
 Fase.INIT.init = () => {
 	sprite = byId('sprite');
 	fase = Fase.TITLE;
-	resetNotes();
 	mainLoop();
 };
 
@@ -418,16 +417,12 @@ Fase.START.draw = () => {
 
 // -----------------------
 // fase PLAY
-Fase.PLAY.init = () => {
-	audio.se('se_start.wav');
-};
 Fase.PLAY.main = () => {
 	const t = new Date().getTime();
 	timeTick = Math.min(t - Fase.PLAY.startTick, MAX_TICK);
 	if (coolTime < t) coolTime = 0;
 	roleNotes();
 };
-
 Fase.PLAY.onTouch = () => {
 	let note = null;
 	for (const n of notes) {
