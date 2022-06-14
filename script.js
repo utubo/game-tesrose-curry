@@ -1,7 +1,9 @@
+// -----------------------
 // Game settings
 const QUOTA = 100;
 const MAX_TICK = (99 * 60 + 59) * 1000 + 999;
 
+// -----------------------
 // Utils
 const loadData = () => {
 		try {
@@ -31,6 +33,7 @@ const lazy = (id, func, msec = 100) => {
 	timers[id] = setTimeout(func, msec);
 };
 
+// -----------------------
 // Graphics
 const ctx = byId('canvas').getContext('2d');
 let sprite;
@@ -62,6 +65,7 @@ const drawTime = (tick, x, y) => {
 	drawNumber(mmssz, x, y);
 };
 
+// -----------------------
 // Audio
 const audio = {};
 
