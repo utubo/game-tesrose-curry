@@ -185,14 +185,18 @@ for (const mp3 of [
 ]) {
 	audio.loadBuffer(mp3); // cache SEs.
 }
-audio.sePan = audio.ctx.createStereoPanner();
-audio.sePan.connect(audio.gainNode);
 audio.se = async (mp3, opt = { pan: 0 }) => {
 	if (!audio.volume) return;
-	audio.sePan.pan.value = opt.pan || 0;
 	const src = audio.ctx.createBufferSource();
 	src.buffer = await audio.loadBuffer(mp3);
-	src.connect(audio.sePan);
+	if (opt.pan) {
+		const sePan = audio.ctx.createStereoPanner();
+		sePan.pan.value = opt.pan || 0;
+		sePan.connect(audio.gainNode);
+		src.connect(sePan);
+	} else {
+		src.connect(audio.gainNode);
+	}
 	src.start();
 };
 
