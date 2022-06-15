@@ -69,7 +69,7 @@ const drawTime = (tick, x, y) => {
 // Audio
 const audio = {};
 
-// Click to unmute
+// Draw volume image
 audio.volumeValueImg = byId('volumeValueImg');
 audio.VOLUMES = [0, 0.2, 0.4, 0.8];
 audio.drawVolumeBtn = () => {
@@ -96,7 +96,7 @@ audio.firstDraw = () => {
 };
 audio.firstDraw();
 
-// Web Audio API
+// Touch to unmute
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 audio.ctx = new AudioContext();
 audio.isInited = false;
